@@ -1,0 +1,172 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #172a25;
+  background: #f7f5f0;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; }
+button, input, textarea, select { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+a { color: inherit; text-decoration: none; }
+::selection { background: #c28b58; color: #fff; }
+
+/* FORMA premium animated hero */
+.forma-hero {
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 8% 15%, rgba(223, 211, 192, 0.35), transparent 40%),
+    linear-gradient(135deg, #f7f5f0 0%, #f5f0e7 55%, #eeece3 100%);
+}
+
+.hero-glow {
+  position: absolute;
+  z-index: -1;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  filter: blur(75px);
+  pointer-events: none;
+  opacity: 0.35;
+  animation: glow-drift 12s ease-in-out infinite alternate;
+}
+
+.hero-glow-one {
+  top: 5%;
+  left: -130px;
+  background: #c9d5c5;
+}
+
+.hero-glow-two {
+  right: -100px;
+  bottom: 0;
+  background: #dfc5a7;
+  animation-delay: -6s;
+}
+
+.hero-content {
+  animation: hero-enter 0.9s ease-out both;
+}
+
+.hero-image-wrap {
+  animation: hero-enter 1.1s ease-out 0.12s both;
+}
+
+.hero-image-frame {
+  box-shadow: 0 28px 70px rgba(41, 51, 42, 0.12);
+}
+
+.hero-image {
+  display: block;
+  animation: image-breathe 18s ease-in-out infinite alternate;
+  transition: filter 0.5s ease;
+}
+
+.hero-image-frame:hover .hero-image {
+  filter: saturate(1.08);
+}
+
+.hero-gold {
+  color: #bd8752;
+}
+
+.hero-button {
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.hero-button:hover {
+  background-color: #29473c;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(23, 42, 37, 0.18);
+}
+
+.hero-floating {
+  animation: float-gently 5s ease-in-out infinite;
+}
+
+.hero-image-card {
+  animation: card-enter 1s ease-out 0.5s both;
+}
+
+.hero-label {
+  animation: hero-enter 0.7s ease-out both;
+}
+
+@keyframes hero-enter {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes image-breathe {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.045);
+  }
+}
+
+@keyframes float-gently {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(4deg);
+  }
+}
+
+@keyframes glow-drift {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(55px, 30px) scale(1.2);
+  }
+}
+
+@keyframes card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-content,
+  .hero-image-wrap,
+  .hero-image,
+  .hero-floating,
+  .hero-image-card,
+  .hero-label,
+  .hero-glow {
+    animation: none !important;
+  }
+
+  .hero-button {
+    transition: none;
+  }
+}
