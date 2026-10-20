@@ -1,19 +1,41 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Route, Routes, ScrollRestoration } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Signin from "./pages/Signin";
-import Signup from "./pages/SignUp";
+import Footer from "./components/Footer";
+import Home from "./pages/Home";
+import Shop from "./pages/Shop";
+import ProductDetails from "./pages/ProductDetails";
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+import OrderSuccess from "./pages/OrderSuccess";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import NotFound from "./pages/NotFound";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
 
-function App() {
-  return (
-    <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<h1 className="p-10 text-center">Home Page</h1>} />
-        <Route path="/signin" element={<Signin />} />
-        <Route path="/signup" element={<Signup />} />
-      </Routes>
-    </BrowserRouter>
-  );
+function ScrollToTop() {
+  // Route changes should start at the top, unless a browser back action restores position.
+  return null;
 }
 
-export default App;
+export default function App() {
+  return (
+    <div className="min-h-screen bg-ivory text-ink">
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/shop" element={<Shop />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/order-success" element={<OrderSuccess />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="*" element={<NotFound />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Routes>
+      <Footer />
+    </div>
+  );
+}
