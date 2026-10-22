@@ -1,165 +1,80 @@
-
 import { Link } from "react-router-dom";
-import {
-  Facebook,
-  Youtube,
-  Instagram,
-  ArrowUpRight,
-  Mail,
-  MapPin,
-  Phone,
-} from "lucide-react";
 
-const Footer = () => {
-  const year = new Date().getFullYear();
-
-  const socialLinks = [
-    {
-      name: "Facebook",
-      icon: Facebook,
-      url: "https://www.facebook.com/",
-    },
-    {
-      name: "YouTube",
-      icon: Youtube,
-      url: "https://www.youtube.com/",
-    },
-    {
-      name: "Instagram",
-      icon: Instagram,
-      url: "https://www.instagram.com/",
-    },
-  ];
-
+export default function Footer() {
   return (
-    <footer className="mt-16 bg-[#172A25] text-[#F7F5F0]">
-      <div className="mx-auto max-w-7xl px-6 pb-12 pt-14 lg:px-8">
-        <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-4">
-          {/* Brand */}
-          <div>
-            <Link to="/" className="inline-flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[#B98250] text-xl font-semibold text-[#D9B48C]">
-                F.
-              </div>
-              <div>
-                <h2 className="text-xl font-bold tracking-[0.2em]">
-                  FORMA
-                </h2>
-                <p className="mt-1 text-[9px] uppercase tracking-[0.22em] text-[#C7B8A5]">
-                  Considered living
-                </p>
-              </div>
-            </Link>
+    <footer className="relative bg-[#0a0a0f] text-zinc-300 overflow-hidden">
+      {/* Glow Effects */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-gradient-to-r from-violet-500/10 via-indigo-500/10 to-blue-500/10 blur-[80px] rounded-full pointer-events-none"></div>
+      <div className="absolute -bottom-20 -left-20 w-[400px] h-[400px] bg-gradient-to-r from-blue-600/20 to-violet-600/20 blur-[100px] rounded-full pointer-events-none"></div>
 
-            <p className="mt-6 max-w-xs text-sm leading-7 text-[#C8D0CA]">
-              Thoughtfully selected essentials for a more beautiful,
-              comfortable and considered everyday life.
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 pt-20 pb-8">
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          
+          {/* Column 1 - Brand */}
+          <div className="space-y-6">
+            <h2 className="text-3xl font-serif font-light tracking-widest text-white">FORMA</h2>
+            <p className="text-[14px] leading-6 text-zinc-400 max-w-[280px]">
+              Thoughtfully selected essentials for a more beautiful, comfortable and considered everyday life.
             </p>
-
-            <div className="mt-6 flex gap-3">
-              {socialLinks.map(({ name, icon: Icon, url }) => (
-                <a
-                  key={name}
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={name}
-                  title={name}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-[#E4C5A4] transition duration-300 hover:-translate-y-1 hover:border-[#B98250] hover:bg-[#B98250] hover:text-white"
-                >
-                  <Icon size={18} />
-                </a>
-              ))}
+            <div className="flex gap-4 pt-2">
+              <a href="#" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all">𝕏</a>
+              <a href="#" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all">◈</a>
+              <a href="#" className="w-9 h-9 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all">◎</a>
             </div>
           </div>
 
-          {/* Quick links */}
+          {/* Column 2 - Explore */}
           <div>
-            <h3 className="mb-6 text-sm font-semibold uppercase tracking-[0.16em] text-[#D9B48C]">
-              Explore
-            </h3>
-            <ul className="space-y-4 text-sm text-[#C8D0CA]">
-              <li><Link className="transition hover:text-white" to="/">Home</Link></li>
-              <li><Link className="transition hover:text-white" to="/shop">Shop All</Link></li>
-              <li><Link className="transition hover:text-white" to="/about">Our Story</Link></li>
-              <li><Link className="transition hover:text-white" to="/contact">Contact Us</Link></li>
+            <h4 className="text-[11px] tracking-[0.2em] font-bold text-zinc-500 mb-6">EXPLORE</h4>
+            <ul className="space-y-3.5 text-[14px]">
+              <li><Link to="/" className="hover:text-white transition">Home</Link></li>
+              <li><Link to="/shop" className="hover:text-white transition">Shop All</Link></li>
+              <li><Link to="/about" className="hover:text-white transition">Our Story</Link></li>
+              <li><Link to="/contact" className="hover:text-white transition">Contact Us</Link></li>
             </ul>
           </div>
 
-          {/* Customer care */}
+          {/* Column 3 - Customer Care */}
           <div>
-            <h3 className="mb-6 text-sm font-semibold uppercase tracking-[0.16em] text-[#D9B48C]">
-              Customer Care
-            </h3>
-            <ul className="space-y-4 text-sm text-[#C8D0CA]">
-              <li>
-                <Link className="transition hover:text-white" to="/cart">
-                  Your Shopping Bag
-                </Link>
-              </li>
-              <li>
-                <Link className="transition hover:text-white" to="/contact">
-                  Help & Support
-                </Link>
-              </li>
-              <li>
-                <Link className="transition hover:text-white" to="/contact">
-                  Shipping Questions
-                </Link>
-              </li>
-              <li>
-                <Link className="transition hover:text-white" to="/contact">
-                  Returns & Exchanges
-                </Link>
-              </li>
+            <h4 className="text-[11px] tracking-[0.2em] font-bold text-zinc-500 mb-6">CUSTOMER CARE</h4>
+            <ul className="space-y-3.5 text-[14px]">
+              <li><Link to="/cart" className="hover:text-white transition">Your Shopping Bag</Link></li>
+              <li><a href="#" className="hover:text-white transition">Help & Support</a></li>
+              <li><a href="#" className="hover:text-white transition">Shipping Questions</a></li>
+              <li><a href="#" className="hover:text-white transition">Returns & Exchanges</a></li>
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Column 4 - Get in Touch */}
           <div>
-            <h3 className="mb-6 text-sm font-semibold uppercase tracking-[0.16em] text-[#D9B48C]">
-              Get in Touch
-            </h3>
+            <h4 className="text-[11px] tracking-[0.2em] font-bold text-zinc-500 mb-6">GET IN TOUCH</h4>
+            <div className="space-y-3 text-[14px] text-zinc-400">
+              <p className="flex items-center gap-2">✉️ contact@forma.store</p>
+              <p className="flex items-center gap-2">💬 Customer assistance</p>
+              <p className="flex items-center gap-2">📍 Here to help, wherever you are</p>
+            </div>
 
-            <ul className="space-y-5 text-sm text-[#C8D0CA]">
-              <li className="flex items-start gap-3">
-                <Mail size={18} className="mt-0.5 shrink-0 text-[#D9B48C]" />
-                <Link to="/contact" className="transition hover:text-white">
-                  Contact our team
-                </Link>
-              </li>
-              <li className="flex items-start gap-3">
-                <Phone size={18} className="mt-0.5 shrink-0 text-[#D9B48C]" />
-                <Link to="/contact" className="transition hover:text-white">
-                  Customer assistance
-                </Link>
-              </li>
-              <li className="flex items-start gap-3">
-                <MapPin size={18} className="mt-0.5 shrink-0 text-[#D9B48C]" />
-                <span>Here to help, wherever you are.</span>
-              </li>
-            </ul>
-
-            <Link
-              to="/shop"
-              className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-[#D9B48C] transition hover:text-white"
-            >
-              Discover the collection <ArrowUpRight size={16} />
-            </Link>
+            <div className="mt-8">
+              <p className="text-[13px] font-medium text-white mb-3">Subscribe for 10% off</p>
+              <div className="flex gap-2">
+                <input 
+                  type="email" 
+                  placeholder="Enter your email" 
+                  className="flex-1 bg-white/5 border border-white/10 rounded-full px-4 py-2.5 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:border-white/30"
+                />
+                <button className="bg-white text-black px-5 py-2.5 rounded-full text-sm font-medium hover:bg-zinc-200 transition">Join</button>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="mt-14 border-t border-white/15 pt-7">
-          <div className="flex flex-col items-center justify-between gap-4 text-center text-xs text-[#C8D0CA] sm:flex-row sm:text-left">
-            <p>© {year} FORMA. All rights reserved.</p>
-            <p className="tracking-wide">
-              Made with care. Designed to last.
-            </p>
-          </div>
+        {/* Bottom Bar */}
+        <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[12px] text-zinc-500">
+          <p>© {new Date().getFullYear()} FORMA. All rights reserved.</p>
+          <p className="flex items-center gap-2">Made with care, designed to last. <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span></p>
         </div>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}
