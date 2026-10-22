@@ -98,8 +98,4 @@ export default function SignIn() {
         </p>
       </div>
 export default SignIn;
-      
-    </main>
-  );
-}
-```
+  
