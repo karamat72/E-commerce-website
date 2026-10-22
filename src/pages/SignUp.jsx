@@ -135,4 +135,4 @@ export default function SignUp() {
     </main>
   );
 }
-export default SignUp;
+
