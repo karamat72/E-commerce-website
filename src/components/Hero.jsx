@@ -1,135 +1,103 @@
-
 import { Link } from "react-router-dom";
-import {
-  ArrowRight,
-  Sparkles,
-  Truck,
-  ShieldCheck,
-  Leaf,
-} from "lucide-react";
 
 export default function Hero() {
   return (
-    <section className="forma-hero relative overflow-hidden">
-      {/* Animated background decoration */}
-      <div className="hero-glow hero-glow-one" />
-      <div className="hero-glow hero-glow-two" />
+    <section className="relative min-h-[90vh] w-full overflow-hidden bg-[#fcfcf9] flex items-center">
+      
+      {/* ===== ANIMATED BACKGROUND BLOBS ===== */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-24 -right-20 w-[600px] h-[600px] bg-gradient-to-br from-violet-200 via-indigo-100 to-pink-100 rounded-full blur-[80px] opacity-60 animate-[float_8s_ease-in-out_infinite]" />
+        <div className="absolute top-1/2 -left-32 w-[500px] h-[500px] bg-gradient-to-br from-amber-100 via-orange-50 to-rose-100 rounded-full blur-[80px] opacity-60 animate-[float_10s_ease-in-out_infinite_reverse]" />
+        <div className="absolute -bottom-32 left-1/3 w-[700px] h-[400px] bg-gradient-to-r from-blue-50 to-teal-50 rounded-full blur-[90px] opacity-50" />
+      </div>
 
-      <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-10 px-6 py-12 sm:px-8 md:py-16 lg:grid-cols-2 lg:gap-8 lg:px-10 lg:py-16">
-        {/* Left content */}
-        <div className="hero-content">
-          <div className="hero-label mb-7 inline-flex items-center gap-2 rounded-full border border-[#E7D9C7] bg-white/70 px-4 py-2">
-            <Sparkles size={15} className="text-[#B98250]" />
-            <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#795A3D] sm:text-xs">
-              Thoughtfully chosen, always
-            </span>
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-12 w-full grid lg:grid-cols-2 gap-12 items-center">
+        
+        {/* LEFT CONTENT */}
+        <div className="space-y-7 z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-zinc-200 shadow-sm">
+            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+            <span className="text-[11px] tracking-[0.2em] font-semibold text-zinc-600">NEW • CURATED FOR COMFORT</span>
           </div>
 
-          <h1 className="hero-heading max-w-xl text-5xl font-semibold leading-[1.04] tracking-[-0.055em] sm:text-6xl lg:text-7xl xl:text-[82px]">
-            <span className="block text-[#172A25]">
-              Good things.
-            </span>
-            <span className="hero-gold block">
-              Better living.
-            </span>
+          <h1 className="text-5xl md:text-7xl font-[300] leading-[0.95] tracking-tight">
+            <span className="font-serif italic font-light block">Good things.</span>
+            <span className="font-serif italic font-light block text-zinc-400">Better living.</span>
           </h1>
 
-          <p className="mt-6 max-w-lg text-base leading-7 text-[#68736D] sm:text-lg sm:leading-8">
-            Everyday essentials, chosen for the way they look,
-            feel, and fit into your life. Discover pieces worth
-            keeping around.
+          <p className="text-[16px] leading-7 text-zinc-600 max-w-[420px]">
+            Elevate your everyday with thoughtfully designed furniture and home goods for a calmer, more beautiful life.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-5">
-            <Link
-              to="/shop"
-              className="hero-button group inline-flex items-center gap-3 rounded-full bg-[#172A25] px-7 py-4 text-sm font-semibold text-white shadow-lg shadow-[#172A25]/10"
-            >
+          <div className="flex flex-wrap gap-4 pt-2">
+            <Link to="/shop" className="group bg-black text-white px-8 py-4 rounded-full text-[14px] font-medium flex items-center gap-3 hover:bg-zinc-800 transition-all hover:-translate-y-[2px] hover:shadow-[0_10px_30px_rgba(0,0,0,0.2)]">
               Shop Collection
-              <ArrowRight
-                size={18}
-                className="transition-transform duration-300 group-hover:translate-x-1"
-              />
+              <span className="group-hover:translate-x-1 transition-transform">→</span>
             </Link>
-
-            <Link
-              to="/about"
-              className="inline-flex items-center gap-2 text-sm font-medium text-[#42534A] transition-colors hover:text-[#B98250]"
-            >
-              Discover our story
-              <ArrowRight size={15} />
+            <Link to="/about" className="px-8 py-4 rounded-full text-[14px] font-medium border border-zinc-300 hover:border-black hover:bg-white transition-all">
+              Our Philosophy
             </Link>
           </div>
 
-          {/* Store benefits */}
-          <div className="mt-12 grid max-w-lg grid-cols-3 border-t border-[#E3DCCF] pt-6">
-            <div className="pr-3">
-              <Truck size={23} strokeWidth={1.5} className="mb-3 text-[#B98250]" />
-              <p className="text-xs font-semibold text-[#172A25] sm:text-sm">
-                Easy Shopping
-              </p>
-              <p className="mt-1 text-[10px] leading-4 text-[#7B827C] sm:text-xs">
-                Simple ordering
-              </p>
-            </div>
-
-            <div className="border-x border-[#E3DCCF] px-3 sm:px-5">
-              <ShieldCheck size={23} strokeWidth={1.5} className="mb-3 text-[#B98250]" />
-              <p className="text-xs font-semibold text-[#172A25] sm:text-sm">
-                Secure Checkout
-              </p>
-              <p className="mt-1 text-[10px] leading-4 text-[#7B827C] sm:text-xs">
-                Shop with confidence
-              </p>
-            </div>
-
-            <div className="pl-3 sm:pl-5">
-              <Leaf size={23} strokeWidth={1.5} className="mb-3 text-[#B98250]" />
-              <p className="text-xs font-semibold text-[#172A25] sm:text-sm">
-                Timeless Style
-              </p>
-              <p className="mt-1 text-[10px] leading-4 text-[#7B827C] sm:text-xs">
-                Made for everyday
-              </p>
-            </div>
+          <div className="flex gap-6 pt-6 text-[12.5px] text-zinc-500 font-medium">
+            <span className="flex items-center gap-1.5">✓ Free shipping $100+</span>
+            <span className="flex items-center gap-1.5">✓ 2-Year Warranty</span>
+            <span className="hidden sm:flex items-center gap-1.5">✓ 30-Day Returns</span>
           </div>
         </div>
 
-        {/* Right image */}
-        <div className="hero-image-wrap relative mx-auto w-full max-w-2xl lg:ml-auto">
-          <div className="hero-image-frame relative overflow-hidden rounded-[28px] bg-[#DDE2D8]">
-            <img
-              src="/images/forma-hero.png"
-              alt="Elegant modern living room with a cream sofa and natural decor"
-              className="hero-image h-[360px] w-full object-cover sm:h-[470px] lg:h-[590px]"
+        {/* RIGHT IMAGE + FLOATING CARDS */}
+        <div className="relative lg:h-[600px] h-[480px] z-10">
+          {/* Main Image */}
+          <div className="absolute inset-0 rounded-[32px] overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.12)]">
+            <img 
+              src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=958" 
+              alt="Modern living room"
+              className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-[3s]"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+          </div>
 
-            <div className="absolute inset-0 bg-gradient-to-t from-[#172A25]/25 via-transparent to-white/5" />
+          {/* Floating Product Card 1 */}
+          <div className="absolute -left-6 top-16 bg-white/80 backdrop-blur-xl rounded-2xl p-3 shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-white/50 flex gap-3 w-[300px] animate-[floatCard_6s_ease-in-out_infinite]">
+            <img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=200" className="w-16 h-16 rounded-xl object-cover" />
+            <div className="flex-1">
+              <p className="text-[13px] font-semibold">Ceramic Table Lamp</p>
+              <p className="text-[11px] text-zinc-500">Warm glow • Linen shade</p>
+              <p className="text-[13px] font-bold mt-1">$89</p>
+            </div>
+            <button className="w-8 h-8 bg-black text-white rounded-full text-sm">+</button>
+          </div>
 
-            <div className="hero-image-card absolute bottom-5 left-5 right-5 rounded-2xl border border-white/60 bg-[#F7F5F0]/90 p-4 shadow-xl backdrop-blur-md sm:bottom-7 sm:left-7 sm:right-auto sm:min-w-[245px] sm:p-5">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#9A754F]">
-                The FORMA Edit
-              </p>
-              <p className="mt-2 text-lg font-semibold text-[#172A25]">
-                Less, but better.
-              </p>
-              <p className="mt-1 text-xs text-[#69736C]">
-                Thoughtful pieces for everyday living.
-              </p>
+          {/* Floating Product Card 2 */}
+          <div className="absolute -right-2 lg:-right-8 bottom-20 bg-white/80 backdrop-blur-xl rounded-2xl p-3 shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-white/50 flex gap-3 w-[280px] animate-[floatCard_6s_ease-in-out_infinite_1s]">
+            <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=200" className="w-16 h-16 rounded-xl object-cover" />
+            <div className="flex-1">
+              <p className="text-[13px] font-semibold">Boucle Lounge Chair</p>
+              <p className="text-[11px] text-zinc-500">Best seller</p>
+              <p className="text-[13px] font-bold mt-1">$429</p>
             </div>
           </div>
 
-          {/* Floating decorative element */}
-          <div className="hero-floating absolute -right-3 -top-4 flex h-[68px] w-[68px] items-center justify-center rounded-full border border-[#E8D7C2] bg-[#F7F5F0] shadow-lg sm:-right-5 sm:-top-5 sm:h-[86px] sm:w-[86px]">
-            <div className="text-center">
-              <Leaf size={20} className="mx-auto text-[#B98250]" />
-              <span className="mt-1 block text-[8px] font-bold uppercase tracking-widest text-[#172A25]">
-                Live well
-              </span>
-            </div>
+          {/* Live Badge */}
+          <div className="absolute top-4 right-4 bg-white rounded-full px-3 py-1.5 text-[11px] font-medium shadow-lg flex items-center gap-2">
+            <span className="w-2 h-2 bg-green-500 rounded-full animate-ping"></span>
+            Live Demo
           </div>
         </div>
       </div>
+
+      {/* KEYFRAMES */}
+      <style>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) translateX(0px); }
+          50% { transform: translateY(-30px) translateX(20px); }
+        }
+        @keyframes floatCard {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-12px); }
+        }
+      `}</style>
     </section>
   );
 }
