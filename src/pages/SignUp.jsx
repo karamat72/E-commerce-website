@@ -135,5 +135,4 @@ export default function SignUp() {
     </main>
   );
 }
-export default SignIn;
-```
+export default SignUp;
