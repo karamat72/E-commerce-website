@@ -97,5 +97,8 @@ export default function SignIn() {
           </Link>
         </p>
       </div>
+    </main>
+    );
+}
 export default SignIn;
   
