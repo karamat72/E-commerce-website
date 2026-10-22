@@ -31,9 +31,9 @@ export default function App() {
         <Route path="/order-success" element={<OrderSuccess />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="*" element={<NotFound />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
+           <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </div>
