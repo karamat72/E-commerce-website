@@ -10,8 +10,8 @@ import OrderSuccess from "./pages/OrderSuccess";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
+import { SignIn } from "./pages/SignIn";
+import { SignUp } from "./pages/SignUp";
 
 function ScrollToTop() {
   // Route changes should start at the top, unless a browser back action restores position.
