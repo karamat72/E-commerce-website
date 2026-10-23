@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { ArrowRight, Sparkles, Star, Truck, Shield } from "lucide-react";
+import { ArrowRight, Sparkles, Truck, ShieldCheck, Percent } from "lucide-react";
 import { Link } from "react-router-dom";
-import Button from "../components/Button";
 import ProductCard from "../components/ProductCard";
 
 const heroSlides = [
@@ -10,27 +9,29 @@ const heroSlides = [
   "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1920&q=90",
 ];
 
+const commonStyle = { innerBg: "bg-[#151515]", textColor: "text-white", subText: "text-zinc-500", badge: "bg-white text-black", button: "bg-white text-black hover:bg-zinc-200" };
+
 const productsByCategory = {
   "Shoes Collection": {
-    bg: "bg-white", style: { innerBg: "bg-[#f5f5f5]", textColor: "text-black", subText: "text-zinc-500", badge: "bg-black text-white", button: "bg-black text-white hover:bg-zinc-800" },
+    bg: "bg-[#0f0f0f]", style: commonStyle,
     items: [
-      { id: 1, name: "Air White Sneakers", price: 12490, badge: "Bestseller", sub: "Pure White • Premium", image: "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600&q=90" },
-      { id: 2, name: "Classic White Sneakers", price: 8490, badge: "New", sub: "Pure White • Premium", image: "https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=600&q=90" },
-      { id: 3, name: "Running White Pro", price: 10990, sub: "Pure White • Premium", image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=600&q=90" },
-      { id: 4, name: "Street White Sneakers", price: 9490, sub: "Pure White • Premium", image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&q=90" },
+      { id: 1, name: "Air White Sneakers", price: 12490, badge: "Bestseller", sub: "Pure White", image: "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600&q=90" },
+      { id: 2, name: "Classic White Sneakers", price: 8490, badge: "New", sub: "Pure White", image: "https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=600&q=90" },
+      { id: 3, name: "Running White Pro", price: 10990, sub: "Pure White", image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=600&q=90" },
+      { id: 4, name: "Street White Sneakers", price: 9490, sub: "Pure White", image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&q=90" },
     ]
   },
   "Dresses Collection": {
-    bg: "bg-[#0f0f0f]", style: { innerBg: "bg-[#1a1a1a]", textColor: "text-white", subText: "text-zinc-400", badge: "bg-white text-black", button: "bg-white text-black hover:bg-zinc-200" },
+    bg: "bg-[#0f0f0f]", style: commonStyle,
     items: [
-      { id: 5, name: "Elegant Black Dress", price: 5490, badge: "New", sub: "Jet Black • Premium", image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800&q=90" },
-      { id: 6, name: "Classic Black Dress", price: 8990, sub: "Jet Black • Premium", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=90" },
-      { id: 7, name: "Evening Black Dress", price: 4290, sub: "Jet Black • Premium", image: "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=800&q=90" },
-      { id: 8, name: "Party Black Gown", price: 12490, sub: "Jet Black • Premium", image: "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=800&q=90" },
+      { id: 5, name: "Elegant Black Dress", price: 5490, badge: "New", sub: "Jet Black", image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800&q=90" },
+      { id: 6, name: "Classic Black Dress", price: 8990, sub: "Jet Black", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=90" },
+      { id: 7, name: "Evening Black Dress", price: 4290, sub: "Jet Black", image: "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=800&q=90" },
+      { id: 8, name: "Party Black Gown", price: 12490, sub: "Jet Black", image: "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=800&q=90" },
     ]
   },
   "Bags Collection": {
-    bg: "bg-[#fdf8f2]", style: { innerBg: "bg-[#fff4e6]", textColor: "text-black", subText: "text-zinc-500", badge: "bg-black text-white", button: "bg-black text-white" },
+    bg: "bg-[#0f0f0f]", style: commonStyle,
     items: [
       { id: 9, name: "Luxury Black Handbag", price: 7490, badge: "Bestseller", sub: "Black Leather", image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=600&q=90" },
       { id: 10, name: "Classic Black Tote", price: 2490, sub: "Black Leather", image: "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=600&q=90" },
@@ -41,59 +42,90 @@ const productsByCategory = {
 };
 
 export default function Home() {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  useEffect(() => {
-    const t = setInterval(() => setCurrentSlide(p => (p + 1) % heroSlides.length), 4000);
-    return () => clearInterval(t);
-  }, []);
+  const [current, setCurrent] = useState(0);
+  useEffect(() => { const t = setInterval(() => setCurrent(p => (p+1)%heroSlides.length), 4000); return () => clearInterval(t); }, []);
 
   return (
-    <>
-      <section className="relative h-[80vh] min-h-[550px] overflow-hidden bg-black">
-        {heroSlides.map((img, i) => (
-          <div key={i} className={`absolute inset-0 transition-opacity duration-[1200ms] ${i === currentSlide ? "opacity-100" : "opacity-0"}`}>
-            <img src={img} alt="hero" className="w-full h-full object-cover" />
+    <div className="bg-black">
+      {/* HERO WITH POSTER ON RIGHT - Fixes your green circles */}
+      <section className="relative h-[85vh] min-h-[620px] overflow-hidden">
+        {heroSlides.map((img,i) => (
+          <div key={i} className={`absolute inset-0 transition-opacity duration-1000 ${i===current?"opacity-100":"opacity-0"}`}>
+            <img src={img} alt="" className="w-full h-full object-cover" />
           </div>
         ))}
-        <div className="absolute inset-0 bg-black/60 bg-gradient-to-r from-black/90 via-black/50 to-transparent" />
-        <div className="relative z-10 mx-auto max-w-7xl h-full flex items-center px-6 lg:px-10">
-          <div className="max-w-2xl">
-            <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-md px-4 py-2 text-[10px] font-bold uppercase tracking-[.2em] text-white"><Sparkles size={14} /> Thoughtfully chosen</p>
-            <h1 className="text-5xl md:text-7xl font-semibold leading-[0.95] tracking-[-.05em] text-white">Good things.<br/><span className="font-normal text-[#d4b896]">Better living.</span></h1>
-            <p className="mt-6 max-w-lg text-[15px] leading-7 text-white/80">Everyday essentials, chosen for the way they look, feel, and fit into your life.</p>
-            <div className="mt-8 flex gap-4"><Link to="/shop"><Button className="bg-white text-black hover:bg-zinc-100">Shop Collection <ArrowRight size={16} /></Button></Link></div>
-            <div className="mt-10 flex gap-2">{heroSlides.map((_, i) => (<button key={i} onClick={() => setCurrentSlide(i)} className={`h-1 rounded-full transition-all ${i === currentSlide ? "w-8 bg-white" : "w-4 bg-white/40"}`} />))}</div>
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/30" />
+
+        <div className="relative z-10 mx-auto max-w-7xl h-full px-6 lg:px-10 flex items-center">
+          <div className="w-full grid lg:grid-cols-2 gap-10 items-center">
+            {/* Left Text */}
+            <div>
+              <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-md px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-white"><Sparkles size={14}/> Thoughtfully Chosen</p>
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold leading-[0.9] tracking-tight text-white">Good things.<br/><span className="font-light text-[#d4b896]">Better living.</span></h1>
+              <p className="mt-6 max-w-lg text-white/70 text-[15px] leading-7">Everyday essentials, chosen for the way they look, feel, and fit into your life.</p>
+              
+              {/* FIXED BUTTONS */}
+              <div className="mt-8 flex items-center gap-4">
+                <Link to="/shop" className="inline-flex items-center gap-2 rounded-full bg-white text-black px-7 py-3.5 text-sm font-bold hover:bg-zinc-100 transition active:scale-95 shadow-[0_0_30px_rgba(255,255,255,0.3)]">Shop Collection <ArrowRight size={16}/></Link>
+                <Link to="/about" className="inline-flex items-center rounded-full border border-white/30 bg-white/10 backdrop-blur-md px-6 py-3.5 text-sm font-semibold text-white hover:bg-white hover:text-black transition">Our Philosophy</Link>
+              </div>
+              <div className="mt-8 flex gap-2">{heroSlides.map((_,i)=><button key={i} onClick={()=>setCurrent(i)} className={`h-1 rounded-full transition-all ${i===current?"w-8 bg-white":"w-4 bg-white/40"}`} />)}</div>
+            </div>
+
+            {/* RIGHT SIDE POSTER - Fixes your empty green circle */}
+            <div className="hidden lg:block">
+              <div className="ml-auto max-w-[340px] rounded-[24px] bg-white/10 backdrop-blur-xl border border-white/20 p-6 shadow-2xl">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-full bg-white text-black grid place-items-center"><Percent size={20}/></div>
+                  <div><p className="text-white font-bold leading-none">FLAT 50% OFF</p><p className="text-white/60 text-xs mt-1">Limited Time Offer</p></div>
+                </div>
+                <div className="rounded-[16px] overflow-hidden h-[200px] bg-zinc-900">
+                  <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=600&q=80" alt="discount" className="w-full h-full object-cover opacity-90" />
+                </div>
+                <p className="text-white text-sm mt-4 font-medium">Premium collections at half price. Hurry up!</p>
+                <Link to="/shop" className="mt-4 w-full bg-white text-black rounded-full py-2.5 text-sm font-bold grid place-items-center hover:bg-zinc-100 transition">Claim Offer <ArrowRight size={14} className="inline ml-1"/></Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ATTRACTIVE SECTIONS */}
-      <div className="bg-white">
-        <section className="mx-auto max-w-7xl px-4 py-16 lg:py-20">
-          <div className="flex justify-between items-end mb-8"><div><p className="text-[10px] tracking-[0.3em] font-bold text-zinc-400 uppercase">Step 01</p><h2 className="text-3xl md:text-4xl font-serif font-light mt-2">Shoes Collection</h2></div><Link to="/shop" className="text-sm font-semibold flex items-center gap-2">View All <ArrowRight size={14} /></Link></div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">{productsByCategory["Shoes Collection"].items.map(p => <ProductCard key={p.id} product={p} uniformBg={productsByCategory["Shoes Collection"].bg} uniformStyle={productsByCategory["Shoes Collection"].style} />)}</div>
-        </section>
+      {/* SHOES - BLACK BACKGROUND */}
+      <section className="mx-auto max-w-7xl px-4 py-16">
+        <div className="flex justify-between items-end mb-8"><div><p className="text-[10px] tracking-[0.3em] font-bold text-zinc-500 uppercase">01 / Premium</p><h2 className="text-3xl md:text-4xl font-light text-white mt-2">Shoes Collection</h2></div><Link to="/shop" className="text-white text-sm flex items-center gap-2">View All <ArrowRight size={14}/></Link></div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">{productsByCategory["Shoes Collection"].items.map(p=><ProductCard key={p.id} product={p} uniformBg={productsByCategory["Shoes Collection"].bg} uniformStyle={productsByCategory["Shoes Collection"].style} />)}</div>
+      </section>
 
-        {/* DESIGN BANNER BETWEEN - Is se black-black ajeeb nahi lagega */}
-        <div className="mx-auto max-w-7xl px-4 pb-4">
-          <div className="rounded-[28px] bg-gradient-to-r from-black via-zinc-900 to-black p-[1px]">
-            <div className="rounded-[27px] bg-gradient-to-r from-[#111] to-[#1a1a1a] px-8 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
-              <div className="flex items-center gap-6"><div className="w-14 h-14 rounded-full bg-white text-black grid place-items-center"><Star size={20} /></div><div><h3 className="text-white text-xl font-semibold">Premium Quality Guaranteed</h3><p className="text-zinc-400 text-sm mt-1">Free delivery • 30 days return • Secure payment</p></div></div>
-              <div className="flex gap-8 text-white"><div className="flex items-center gap-2"><Truck size={18} /><span className="text-sm">Fast Delivery</span></div><div className="flex items-center gap-2"><Shield size={18} /><span className="text-sm">Secure</span></div></div>
-            </div>
-          </div>
+      {/* GAP DESIGN BETWEEN COLLECTIONS */}
+      <div className="mx-auto max-w-7xl px-4">
+        <div className="h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent my-4" />
+        <div className="rounded-[24px] border border-white/10 bg-gradient-to-r from-zinc-900 to-black px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-4"><div className="w-12 h-12 rounded-full bg-white grid place-items-center text-black"><Truck size={20}/></div><div><h4 className="text-white font-semibold">Free & Fast Delivery</h4><p className="text-zinc-500 text-xs">On all orders above Rs 5,000</p></div></div>
+          <div className="flex items-center gap-8"><span className="text-zinc-600 text-xs tracking-widest">★★★★★ TRUSTED BY 10K+ CUSTOMERS</span><div className="flex items-center gap-2 text-white text-sm"><ShieldCheck size={16}/> Secure Payment</div></div>
         </div>
-
-        <section className="bg-[#0a0a0a] rounded-t-[32px] mx-auto max-w-7xl px-4 py-16 lg:py-20 mt-6">
-          <div className="flex justify-between items-end mb-8"><div><p className="text-[10px] tracking-[0.3em] font-bold text-zinc-500 uppercase">Step 02</p><h2 className="text-3xl md:text-4xl font-serif font-light mt-2 text-white">Dresses Collection</h2><p className="text-zinc-500 text-xs mt-2">Black premium dresses — dark theme</p></div><Link to="/shop" className="text-white text-sm flex items-center gap-2">View All <ArrowRight size={14} /></Link></div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">{productsByCategory["Dresses Collection"].items.map(p => <ProductCard key={p.id} product={p} uniformBg={productsByCategory["Dresses Collection"].bg} uniformStyle={productsByCategory["Dresses Collection"].style} />)}</div>
-        </section>
-
-        <section className="mx-auto max-w-7xl px-4 py-16 lg:py-20 bg-[#fdf8f2] rounded-t-[32px] -mt-8">
-          <div className="flex justify-between items-end mb-8"><div><p className="text-[10px] tracking-[0.3em] font-bold text-zinc-400 uppercase">Step 03</p><h2 className="text-3xl md:text-4xl font-serif font-light mt-2">Bags Collection</h2></div><Link to="/shop" className="text-sm font-semibold flex items-center gap-2">View All <ArrowRight size={14} /></Link></div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">{productsByCategory["Bags Collection"].items.map(p => <ProductCard key={p.id} product={p} uniformBg={productsByCategory["Bags Collection"].bg} uniformStyle={productsByCategory["Bags Collection"].style} />)}</div>
-        </section>
+        <div className="h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent my-6" />
       </div>
-    </>
+
+      {/* DRESSES - BLACK */}
+      <section className="mx-auto max-w-7xl px-4 py-16">
+        <div className="flex justify-between items-end mb-8"><div><p className="text-[10px] tracking-[0.3em] font-bold text-zinc-500 uppercase">02 / Elegant</p><h2 className="text-3xl md:text-4xl font-light text-white mt-2">Dresses Collection</h2></div><Link to="/shop" className="text-white text-sm flex items-center gap-2">View All <ArrowRight size={14}/></Link></div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">{productsByCategory["Dresses Collection"].items.map(p=><ProductCard key={p.id} product={p} uniformBg={productsByCategory["Dresses Collection"].bg} uniformStyle={productsByCategory["Dresses Collection"].style} />)}</div>
+      </section>
+
+      {/* SECOND GAP POSTER - DISCOUNT */}
+      <div className="mx-auto max-w-7xl px-4 py-6">
+        <div className="rounded-[24px] bg-white text-black p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+          <div className="absolute right-0 top-0 w-[300px] h-full bg-gradient-to-l from-zinc-100 to-transparent pointer-events-none" />
+          <div className="relative z-10"><p className="text-[10px] tracking-[0.3em] font-bold text-zinc-500 uppercase">Special Discount</p><h3 className="text-3xl font-bold mt-2">Get 30% OFF on Bags</h3><p className="text-zinc-600 text-sm mt-2">Use code: <span className="font-bold text-black bg-zinc-100 px-2 py-1 rounded">BAG30</span> at checkout</p></div>
+          <Link to="/shop" className="relative z-10 bg-black text-white rounded-full px-8 py-3 text-sm font-bold hover:bg-zinc-800 transition">Shop Now <ArrowRight size={14} className="inline ml-2"/></Link>
+        </div>
+      </div>
+
+      {/* BAGS - BLACK */}
+      <section className="mx-auto max-w-7xl px-4 py-16 pb-24">
+        <div className="flex justify-between items-end mb-8"><div><p className="text-[10px] tracking-[0.3em] font-bold text-zinc-500 uppercase">03 / Luxury</p><h2 className="text-3xl md:text-4xl font-light text-white mt-2">Bags Collection</h2></div><Link to="/shop" className="text-white text-sm flex items-center gap-2">View All <ArrowRight size={14}/></Link></div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">{productsByCategory["Bags Collection"].items.map(p=><ProductCard key={p.id} product={p} uniformBg={productsByCategory["Bags Collection"].bg} uniformStyle={productsByCategory["Bags Collection"].style} />)}</div>
+      </section>
+    </div>
   );
 }
