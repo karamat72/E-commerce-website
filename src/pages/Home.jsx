@@ -98,7 +98,8 @@ export default function Home() {
       </section>
 
       {/* SHOES - YAHAN SCROLL HOGA */}
-      <section ref={productsRef} id="products" className="mx-auto max-w-7xl px-4 py-16">
+     {/* SHOES - SHOP CLICK PE YAHAN SCROLL HOGA */}
+<section ref={productsRef} id="shoes-collection" className="mx-auto max-w-7xl px-4 py-16 scroll-mt-20">
         <div className="flex justify-between items-end mb-8"><div><p className="text-[10px] tracking-[0.3em] font-bold text-zinc-500 uppercase">01 / Premium</p><h2 className="text-3xl md:text-4xl font-light text-white mt-2">Shoes Collection</h2></div><Link to="/shop?category=shoes" className="text-white text-sm flex items-center gap-2 hover:gap-3 transition-all">View All <ArrowRight size={14}/></Link></div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">{productsByCategory["Shoes Collection"].items.map(p=><ProductCard key={p.id} product={p} uniformBg={productsByCategory["Shoes Collection"].bg} uniformStyle={productsByCategory["Shoes Collection"].style} />)}</div>
       </section>
@@ -113,7 +114,7 @@ export default function Home() {
       </div>
 
       {/* DRESSES */}
-      <section className="mx-auto max-w-7xl px-4 py-16">
+      <section id="dresses-collection" className="mx-auto max-w-7xl px-4 py-16 scroll-mt-20">
         <div className="flex justify-between items-end mb-8"><div><p className="text-[10px] tracking-[0.3em] font-bold text-zinc-500 uppercase">02 / Elegant</p><h2 className="text-3xl md:text-4xl font-light text-white mt-2">Dresses Collection</h2></div><Link to="/shop?category=dresses" className="text-white text-sm flex items-center gap-2 hover:gap-3 transition-all">View All <ArrowRight size={14}/></Link></div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">{productsByCategory["Dresses Collection"].items.map(p=><ProductCard key={p.id} product={p} uniformBg={productsByCategory["Dresses Collection"].bg} uniformStyle={productsByCategory["Dresses Collection"].style} />)}</div>
       </section>
@@ -127,7 +128,7 @@ export default function Home() {
       </div>
 
       {/* BAGS */}
-      <section className="mx-auto max-w-7xl px-4 py-16 pb-24">
+      <section id="bags-collection" className="mx-auto max-w-7xl px-4 py-16 pb-24 scroll-mt-20">
         <div className="flex justify-between items-end mb-8"><div><p className="text-[10px] tracking-[0.3em] font-bold text-zinc-500 uppercase">03 / Luxury</p><h2 className="text-3xl md:text-4xl font-light text-white mt-2">Bags Collection</h2></div><Link to="/shop?category=bags" className="text-white text-sm flex items-center gap-2 hover:gap-3 transition-all">View All <ArrowRight size={14}/></Link></div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">{productsByCategory["Bags Collection"].items.map(p=><ProductCard key={p.id} product={p} uniformBg={productsByCategory["Bags Collection"].bg} uniformStyle={productsByCategory["Bags Collection"].style} />)}</div>
       </section>
