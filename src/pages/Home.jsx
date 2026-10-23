@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ArrowRight, Sparkles, Truck, ShieldCheck, Percent } from "lucide-react";
 import { Link } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
@@ -43,23 +43,29 @@ const productsByCategory = {
 
 export default function Home() {
   const [current, setCurrent] = useState(0);
+  const productsRef = useRef(null);
+
   useEffect(() => { 
     const t = setInterval(() => setCurrent(p => (p+1)%heroSlides.length), 4000); 
     return () => clearInterval(t); 
   }, []);
 
+  const scrollToProducts = () => {
+    productsRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div className="bg-black">
-      {/* HERO - BOTH BUTTONS FIXED */}
+      {/* HERO - SHOP COLLECTION AB SCROLL KAREGA */}
       <section className="relative h-[85vh] min-h-[620px] overflow-hidden">
         {heroSlides.map((img,i) => (
-          <div key={i} className={`absolute inset-0 transition-opacity duration-1000 ${i===current?"opacity-100":"opacity-0"}`}>
+          <div key={i} className={`absolute inset-0 transition-opacity duration-1000 ${i===current?"opacity-100":"opacity-0"} pointer-events-none`}>
             <img src={img} alt="" className="w-full h-full object-cover" />
           </div>
         ))}
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/30 pointer-events-none" />
 
-        <div className="relative z-10 mx-auto max-w-7xl h-full px-6 lg:px-10 flex items-center">
+        <div className="relative z-20 mx-auto max-w-7xl h-full px-6 lg:px-10 flex items-center">
           <div className="w-full grid lg:grid-cols-2 gap-10 items-center">
             <div>
               <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-md px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-white"><Sparkles size={14}/> Thoughtfully Chosen</p>
@@ -67,7 +73,8 @@ export default function Home() {
               <p className="mt-6 max-w-lg text-white/70 text-[15px] leading-7">Everyday essentials, chosen for the way they look, feel, and fit into your life.</p>
               
               <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Link to="/shop" className="inline-flex items-center gap-2 rounded-full bg-white text-black px-7 py-3.5 text-sm font-bold hover:bg-zinc-100 transition active:scale-95 shadow-[0_0_30px_rgba(255,255,255,0.3)]">Shop Collection <ArrowRight size={16}/></Link>
+                {/* AB YE BUTTON NICHE SCROLL KAREGA */}
+                <button onClick={scrollToProducts} className="inline-flex items-center gap-2 rounded-full bg-white text-black px-7 py-3.5 text-sm font-bold hover:bg-zinc-100 transition active:scale-95 shadow-[0_0_30px_rgba(255,255,255,0.3)] cursor-pointer">Shop Collection <ArrowRight size={16}/></button>
                 <Link to="/about" className="inline-flex items-center rounded-full border border-white/30 bg-white/10 backdrop-blur-md px-6 py-3.5 text-sm font-semibold text-white hover:bg-white hover:text-black transition">Our Philosophy</Link>
               </div>
               <div className="mt-8 flex gap-2">{heroSlides.map((_,i)=><button key={i} onClick={()=>setCurrent(i)} className={`h-1 rounded-full transition-all ${i===current?"w-8 bg-white":"w-4 bg-white/40"}`} />)}</div>
@@ -83,15 +90,15 @@ export default function Home() {
                   <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=600&q=80" alt="discount" className="w-full h-full object-cover opacity-90" />
                 </div>
                 <p className="text-white text-sm mt-4 font-medium">Premium collections at half price. Hurry up!</p>
-                <Link to="/shop" className="mt-4 w-full bg-white text-black rounded-full py-2.5 text-sm font-bold grid place-items-center hover:bg-zinc-100 transition">Claim Offer <ArrowRight size={14} className="inline ml-1"/></Link>
+                <button onClick={scrollToProducts} className="mt-4 w-full bg-white text-black rounded-full py-2.5 text-sm font-bold grid place-items-center hover:bg-zinc-100 transition">Claim Offer <ArrowRight size={14} className="inline ml-1"/></button>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* SHOES */}
-      <section className="mx-auto max-w-7xl px-4 py-16">
+      {/* SHOES - YAHAN SCROLL HOGA */}
+      <section ref={productsRef} id="products" className="mx-auto max-w-7xl px-4 py-16">
         <div className="flex justify-between items-end mb-8"><div><p className="text-[10px] tracking-[0.3em] font-bold text-zinc-500 uppercase">01 / Premium</p><h2 className="text-3xl md:text-4xl font-light text-white mt-2">Shoes Collection</h2></div><Link to="/shop?category=shoes" className="text-white text-sm flex items-center gap-2 hover:gap-3 transition-all">View All <ArrowRight size={14}/></Link></div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">{productsByCategory["Shoes Collection"].items.map(p=><ProductCard key={p.id} product={p} uniformBg={productsByCategory["Shoes Collection"].bg} uniformStyle={productsByCategory["Shoes Collection"].style} />)}</div>
       </section>
