@@ -43,11 +43,14 @@ const productsByCategory = {
 
 export default function Home() {
   const [current, setCurrent] = useState(0);
-  useEffect(() => { const t = setInterval(() => setCurrent(p => (p+1)%heroSlides.length), 4000); return () => clearInterval(t); }, []);
+  useEffect(() => { 
+    const t = setInterval(() => setCurrent(p => (p+1)%heroSlides.length), 4000); 
+    return () => clearInterval(t); 
+  }, []);
 
   return (
     <div className="bg-black">
-      {/* HERO WITH POSTER ON RIGHT - Fixes your green circles */}
+      {/* HERO - BOTH BUTTONS FIXED */}
       <section className="relative h-[85vh] min-h-[620px] overflow-hidden">
         {heroSlides.map((img,i) => (
           <div key={i} className={`absolute inset-0 transition-opacity duration-1000 ${i===current?"opacity-100":"opacity-0"}`}>
@@ -58,21 +61,18 @@ export default function Home() {
 
         <div className="relative z-10 mx-auto max-w-7xl h-full px-6 lg:px-10 flex items-center">
           <div className="w-full grid lg:grid-cols-2 gap-10 items-center">
-            {/* Left Text */}
             <div>
               <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-md px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-white"><Sparkles size={14}/> Thoughtfully Chosen</p>
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold leading-[0.9] tracking-tight text-white">Good things.<br/><span className="font-light text-[#d4b896]">Better living.</span></h1>
               <p className="mt-6 max-w-lg text-white/70 text-[15px] leading-7">Everyday essentials, chosen for the way they look, feel, and fit into your life.</p>
               
-              {/* FIXED BUTTONS */}
-              <div className="mt-8 flex items-center gap-4">
+              <div className="mt-8 flex flex-wrap items-center gap-4">
                 <Link to="/shop" className="inline-flex items-center gap-2 rounded-full bg-white text-black px-7 py-3.5 text-sm font-bold hover:bg-zinc-100 transition active:scale-95 shadow-[0_0_30px_rgba(255,255,255,0.3)]">Shop Collection <ArrowRight size={16}/></Link>
                 <Link to="/about" className="inline-flex items-center rounded-full border border-white/30 bg-white/10 backdrop-blur-md px-6 py-3.5 text-sm font-semibold text-white hover:bg-white hover:text-black transition">Our Philosophy</Link>
               </div>
               <div className="mt-8 flex gap-2">{heroSlides.map((_,i)=><button key={i} onClick={()=>setCurrent(i)} className={`h-1 rounded-full transition-all ${i===current?"w-8 bg-white":"w-4 bg-white/40"}`} />)}</div>
             </div>
 
-            {/* RIGHT SIDE POSTER - Fixes your empty green circle */}
             <div className="hidden lg:block">
               <div className="ml-auto max-w-[340px] rounded-[24px] bg-white/10 backdrop-blur-xl border border-white/20 p-6 shadow-2xl">
                 <div className="flex items-center gap-3 mb-4">
@@ -90,13 +90,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SHOES - BLACK BACKGROUND */}
+      {/* SHOES */}
       <section className="mx-auto max-w-7xl px-4 py-16">
-        <div className="flex justify-between items-end mb-8"><div><p className="text-[10px] tracking-[0.3em] font-bold text-zinc-500 uppercase">01 / Premium</p><h2 className="text-3xl md:text-4xl font-light text-white mt-2">Shoes Collection</h2></div><Link to="/shop" className="text-white text-sm flex items-center gap-2">View All <ArrowRight size={14}/></Link></div>
+        <div className="flex justify-between items-end mb-8"><div><p className="text-[10px] tracking-[0.3em] font-bold text-zinc-500 uppercase">01 / Premium</p><h2 className="text-3xl md:text-4xl font-light text-white mt-2">Shoes Collection</h2></div><Link to="/shop?category=shoes" className="text-white text-sm flex items-center gap-2 hover:gap-3 transition-all">View All <ArrowRight size={14}/></Link></div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">{productsByCategory["Shoes Collection"].items.map(p=><ProductCard key={p.id} product={p} uniformBg={productsByCategory["Shoes Collection"].bg} uniformStyle={productsByCategory["Shoes Collection"].style} />)}</div>
       </section>
 
-      {/* GAP DESIGN BETWEEN COLLECTIONS */}
       <div className="mx-auto max-w-7xl px-4">
         <div className="h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent my-4" />
         <div className="rounded-[24px] border border-white/10 bg-gradient-to-r from-zinc-900 to-black px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
@@ -106,24 +105,23 @@ export default function Home() {
         <div className="h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent my-6" />
       </div>
 
-      {/* DRESSES - BLACK */}
+      {/* DRESSES */}
       <section className="mx-auto max-w-7xl px-4 py-16">
-        <div className="flex justify-between items-end mb-8"><div><p className="text-[10px] tracking-[0.3em] font-bold text-zinc-500 uppercase">02 / Elegant</p><h2 className="text-3xl md:text-4xl font-light text-white mt-2">Dresses Collection</h2></div><Link to="/shop" className="text-white text-sm flex items-center gap-2">View All <ArrowRight size={14}/></Link></div>
+        <div className="flex justify-between items-end mb-8"><div><p className="text-[10px] tracking-[0.3em] font-bold text-zinc-500 uppercase">02 / Elegant</p><h2 className="text-3xl md:text-4xl font-light text-white mt-2">Dresses Collection</h2></div><Link to="/shop?category=dresses" className="text-white text-sm flex items-center gap-2 hover:gap-3 transition-all">View All <ArrowRight size={14}/></Link></div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">{productsByCategory["Dresses Collection"].items.map(p=><ProductCard key={p.id} product={p} uniformBg={productsByCategory["Dresses Collection"].bg} uniformStyle={productsByCategory["Dresses Collection"].style} />)}</div>
       </section>
 
-      {/* SECOND GAP POSTER - DISCOUNT */}
       <div className="mx-auto max-w-7xl px-4 py-6">
         <div className="rounded-[24px] bg-white text-black p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
           <div className="absolute right-0 top-0 w-[300px] h-full bg-gradient-to-l from-zinc-100 to-transparent pointer-events-none" />
           <div className="relative z-10"><p className="text-[10px] tracking-[0.3em] font-bold text-zinc-500 uppercase">Special Discount</p><h3 className="text-3xl font-bold mt-2">Get 30% OFF on Bags</h3><p className="text-zinc-600 text-sm mt-2">Use code: <span className="font-bold text-black bg-zinc-100 px-2 py-1 rounded">BAG30</span> at checkout</p></div>
-          <Link to="/shop" className="relative z-10 bg-black text-white rounded-full px-8 py-3 text-sm font-bold hover:bg-zinc-800 transition">Shop Now <ArrowRight size={14} className="inline ml-2"/></Link>
+          <Link to="/shop?category=bags" className="relative z-10 bg-black text-white rounded-full px-8 py-3 text-sm font-bold hover:bg-zinc-800 transition">Shop Now <ArrowRight size={14} className="inline ml-2"/></Link>
         </div>
       </div>
 
-      {/* BAGS - BLACK */}
+      {/* BAGS */}
       <section className="mx-auto max-w-7xl px-4 py-16 pb-24">
-        <div className="flex justify-between items-end mb-8"><div><p className="text-[10px] tracking-[0.3em] font-bold text-zinc-500 uppercase">03 / Luxury</p><h2 className="text-3xl md:text-4xl font-light text-white mt-2">Bags Collection</h2></div><Link to="/shop" className="text-white text-sm flex items-center gap-2">View All <ArrowRight size={14}/></Link></div>
+        <div className="flex justify-between items-end mb-8"><div><p className="text-[10px] tracking-[0.3em] font-bold text-zinc-500 uppercase">03 / Luxury</p><h2 className="text-3xl md:text-4xl font-light text-white mt-2">Bags Collection</h2></div><Link to="/shop?category=bags" className="text-white text-sm flex items-center gap-2 hover:gap-3 transition-all">View All <ArrowRight size={14}/></Link></div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">{productsByCategory["Bags Collection"].items.map(p=><ProductCard key={p.id} product={p} uniformBg={productsByCategory["Bags Collection"].bg} uniformStyle={productsByCategory["Bags Collection"].style} />)}</div>
       </section>
     </div>
