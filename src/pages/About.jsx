@@ -1,21 +1,50 @@
-import { ArrowRight, Heart, Leaf, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
-import Button from "../components/Button";
+import { ArrowRight, ShieldCheck, Heart, Truck, Calendar, Award, Sparkles, Check } from "lucide-react";
 
 export default function About() {
   return (
-    <div className="bg-ivory">
-      <section className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 md:grid-cols-2 md:items-center lg:px-8 lg:py-20">
-        <div>
-          <p className="mb-4 text-[10px] font-bold uppercase tracking-[.22em] text-bronze">A little about us</p>
-          <h1 className="text-5xl font-semibold leading-[1.05] tracking-[-.06em] text-ink sm:text-6xl">Less clutter.<br/><span className="font-normal italic text-bronze">More meaning.</span></h1>
-          <p className="mt-6 max-w-lg text-sm leading-7 text-muted">React Store is a concept store built around a simple idea: everyday objects should be useful, thoughtfully designed, and a pleasure to live with.</p>
-          <p className="mt-4 max-w-lg text-sm leading-7 text-muted">We bring together lifestyle, home, accessories, and tech essentials in one calm, easy-to-browse collection. This project is a frontend demo created to explore a complete modern shopping experience.</p>
-          <Link to="/shop" className="mt-7 inline-block"><Button>Explore the collection <ArrowRight size={16}/></Button></Link>
+    <div className="bg-[#0a0a0a] text-white">
+      {/* HERO - EXACT HOME COLOR MATCH */}
+      <section className="relative overflow-hidden bg-[#0f0f0f] border-b border-white/10">
+        <div className="mx-auto max-w-7xl px-6 lg:px-10 py-20 lg:py-28 grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-[#151515] px-4 py-2 text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400"><Sparkles size={12}/> A Little About Us</p>
+            <h1 className="mt-6 text-5xl md:text-6xl lg:text-7xl font-semibold leading-[0.9] tracking-tight">Less clutter.<br/><span className="font-light text-white">More meaning.</span></h1>
+            <p className="mt-6 text-zinc-400 leading-7 max-w-xl text-[15px]">My Store is not just a shop — it's a promise. A promise of quality, trust, and better living. Since day one, we choose only what we believe in.</p>
+            <div className="mt-8 flex items-center gap-6">
+              <div><p className="text-2xl font-bold">2023</p><p className="text-[10px] text-zinc-500 tracking-widest uppercase">Started</p></div>
+              <div className="h-10 w-[1px] bg-white/10" />
+              <div><p className="text-2xl font-bold">10K+</p><p className="text-[10px] text-zinc-500 tracking-widest uppercase">Happy Customers</p></div>
+              <div className="h-10 w-[1px] bg-white/10" />
+              <div><p className="text-2xl font-bold">100%</p><p className="text-[10px] text-zinc-500 tracking-widest uppercase">Trusted</p></div>
+            </div>
+          </div>
+          <div className="relative">
+            <div className="rounded-[28px] overflow-hidden bg-[#151515] border border-white/10 p-2">
+              <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1000&q=90" alt="store" className="rounded-[20px] w-full h-[420px] object-cover" />
+            </div>
+            <div className="absolute -bottom-6 -left-6 rounded-[20px] bg-white text-black p-5 shadow-[0_20px_60px_rgba(255,255,255,0.2)] max-w-[260px]">
+              <div className="flex items-center gap-3"><div className="w-10 h-10 rounded-full bg-black text-white grid place-items-center"><ShieldCheck size={18}/></div><div><p className="font-bold text-sm">Trusted Store</p><p className="text-xs text-zinc-500">Verified since 2023</p></div></div>
+            </div>
+          </div>
         </div>
-        <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85" alt="Warm and thoughtfully designed living space" className="aspect-[4/4.3] w-full rounded-[2rem] object-cover"/>
       </section>
-      <section className="bg-white py-14 lg:py-20"><div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 md:grid-cols-3 lg:px-8">{[{icon:Heart,title:"Made for real life",text:"Useful things should work beautifully in everyday routines."},{icon:Leaf,title:"A considered edit",text:"We favour a focused collection over endless choice."},{icon:Sparkles,title:"Details matter",text:"A clear layout and thoughtful details make shopping feel easier."}].map(({icon:Icon,title,text})=><div key={title} className="rounded-2xl border border-ink/10 p-6"><span className="grid h-11 w-11 place-items-center rounded-full bg-ivory text-ink"><Icon size={19}/></span><h2 className="mt-5 text-lg font-semibold text-ink">{title}</h2><p className="mt-2 text-sm leading-7 text-muted">{text}</p></div>)}</div></section>
-    </div>
-  );
-}
+
+      {/* JOURNEY - MATCHED BLACK CARDS */}
+      <section className="mx-auto max-w-7xl px-6 lg:px-10 py-20">
+        <div className="grid md:grid-cols-3 gap-10">
+          <div className="md:col-span-1"><p className="text-[10px] tracking-[0.3em] font-bold text-zinc-500 uppercase">Our Journey</p><h2 className="text-3xl font-light mt-3">From idea to<br/>10,000 smiles.</h2><p className="text-zinc-500 text-sm mt-4 leading-6">Home jaisa hi black background, same card style.</p></div>
+          <div className="md:col-span-2 space-y-6">
+            <div className="rounded-[20px] bg-[#0f0f0f] border border-white/10 p-6 flex gap-6"><div className="w-10 h-10 rounded-full bg-white text-black grid place-items-center font-bold text-xs shrink-0">23</div><div><p className="flex items-center gap-2 text-xs text-zinc-500 uppercase tracking-widest"><Calendar size={12}/> Jan 15, 2023 — The Start</p><h3 className="text-lg font-semibold mt-2">The Dream Started</h3><p className="text-zinc-400 text-sm mt-2 leading-6">Humne My Store isliye banaya kyunki bazaar me quality nahi thi. Har product useful ho, beautiful ho, aur dil se chuna hua ho.</p></div></div>
+            <div className="rounded-[20px] bg-[#0f0f0f] border border-white/10 p-6 flex gap-6"><div className="w-10 h-10 rounded-full bg-[#151515] border border-white/10 text-white grid place-items-center font-bold text-xs shrink-0">24</div><div><p className="flex items-center gap-2 text-xs text-zinc-500 uppercase tracking-widest"><Calendar size={12}/> Jun 10, 2024 — Growth</p><h3 className="text-lg font-semibold mt-2">Trust Bana</h3><p className="text-zinc-400 text-sm mt-2 leading-6">5000+ customers ne bharosa kiya. Shoes, Dresses, Bags — sab categories add ki, lekin ek hi rule: No compromise on quality.</p></div></div>
+            <div className="rounded-[20px] bg-white text-black p-6 flex gap-6"><div className="w-10 h-10 rounded-full bg-black text-white grid place-items-center font-bold text-xs shrink-0">26</div><div><p className="flex items-center gap-2 text-xs text-zinc-500 uppercase tracking-widest"><Calendar size={12}/> Oct 23, 2026 — Today</p><h3 className="text-lg font-semibold mt-2">Aapka Apna Store</h3><p className="text-zinc-600 text-sm mt-2 leading-6">Aaj 10,000+ happy families. Humara kaam sirf bechna nahi — aapki life thodi better banana hai.</p></div></div>
+          </div>
+        </div>
+      </section>
+
+      {/* TRUST - MATCHED */}
+      <section className="border-y border-white/10 bg-[#0f0f0f]">
+        <div className="mx-auto max-w-7xl px-6 lg:px-10 py-16 grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="flex gap-4"><div className="w-12 h-12 rounded-full bg-[#151515] border border-white/10 text-white grid place-items-center"><ShieldCheck size={20}/></div><div><p className="font-bold text-sm">100% Original</p><p className="text-xs text-zinc-500 mt-1">Guaranteed</p></div></div>
+          <div className="flex gap-4"><div className="w-12 h-12 rounded-full bg-[#151515] border border-white/10 text-white grid place-items-center"><Truck size={20}/></div><div><p className="font-bold text-sm">Fast Delivery</p><p className="text-xs text-zinc-500 mt-1">2-3 days Pakistan</p></div></div>
+          <div className="flex gap-4"><div className="w-12 h-12 rounded-full bg-[#151515] border
