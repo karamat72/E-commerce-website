@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ChevronDown, ShoppingBag, Menu, X } from "lucide-react";
 
 export default function Navbar() {
@@ -7,6 +7,8 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileShopOpen, setMobileShopOpen] = useState(true);
   const ref = useRef(null);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handler = (e) => {
@@ -16,12 +18,49 @@ export default function Navbar() {
     return () => document.removeEventListener("click", handler);
   }, []);
 
+  // Scroll function - Home pe hai to direct scroll, nahi to Home pe ja ke scroll
+  const scrollToSection = (id) => {
+    const goScroll = () => {
+      setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
+    };
+
+    if (location.pathname === "/") {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    } else {
+      navigate("/");
+      goScroll();
+    }
+  };
+
+  const handleShopClick = () => {
+    setShopOpen(false);
+    setMobileOpen(false);
+    scrollToSection("products");
+  };
+
+  const handleCategoryClick = (cat) => {
+    setShopOpen(false);
+    setMobileOpen(false);
+    
+    // Category ke hisab se ID map
+    const idMap = {
+      shoes: "shoes-collection",
+      dresses: "dresses-collection",
+      bags: "bags-collection",
+      tech: "bags-collection",
+      lifestyle: "products"
+    };
+    scrollToSection(idMap[cat] || "products");
+  };
+
   const shopCategories = [
-    { name: "Shoes Collection", sub: "Sneakers & Sports", link: "/shop?category=shoes" },
-    { name: "Dresses Collection", sub: "Party & Casual", link: "/shop?category=dresses" },
-    { name: "Bags Collection", sub: "Handbags & Totes", link: "/shop?category=bags" },
-    { name: "Tech Essentials", sub: "Gadgets & Gear", link: "/shop?category=tech" },
-    { name: "Lifestyle", sub: "Home & Living", link: "/shop?category=lifestyle" },
+    { name: "Shoes Collection", sub: "Sneakers & Sports", cat: "shoes" },
+    { name: "Dresses Collection", sub: "Party & Casual", cat: "dresses" },
+    { name: "Bags Collection", sub: "Handbags & Totes", cat: "bags" },
+    { name: "Tech Essentials", sub: "Gadgets & Gear", cat: "tech" },
+    { name: "Lifestyle", sub: "Home & Living", cat: "lifestyle" },
   ];
 
   return (
@@ -31,13 +70,12 @@ export default function Navbar() {
           MY STORE
         </Link>
 
-        {/* DESKTOP MENU - FIXED SHOP REDIRECT */}
+        {/* DESKTOP MENU - SCROLL VERSION */}
         <nav className="hidden lg:flex items-center gap-8 text-[14px]">
           <Link to="/" className="text-white">Home</Link>
           
-          {/* YAHAN FIX KIYA HAI - Shop Link + Arrow Button Alag */}
           <div ref={ref} className="relative flex items-center gap-1">
-            <Link to="/shop" className="text-zinc-400 hover:text-white">Shop</Link>
+            <button onClick={handleShopClick} className="text-zinc-400 hover:text-white">Shop</button>
             <button onClick={(e) => { e.stopPropagation(); setShopOpen(!shopOpen); }} className="p-1 text-zinc-400 hover:text-white grid place-items-center">
               <ChevronDown size={14} className={`${shopOpen ? "rotate-180" : ""} transition`} />
             </button>
@@ -46,12 +84,12 @@ export default function Navbar() {
               <div className="absolute left-1/2 -translate-x-1/2 top-[50px] w-[420px] bg-white rounded-[20px] p-3 shadow-2xl z-50">
                 <div className="grid grid-cols-2 gap-2">
                   {shopCategories.map((c) => (
-                    <Link key={c.name} to={c.link} onClick={() => setShopOpen(false)} className="p-3 rounded-xl hover:bg-zinc-100 text-black block">
+                    <button key={c.name} onClick={() => handleCategoryClick(c.cat)} className="p-3 rounded-xl hover:bg-zinc-100 text-black block text-left w-full">
                       <p className="font-bold text-sm">{c.name}</p><p className="text-xs text-zinc-500">{c.sub}</p>
-                    </Link>
+                    </button>
                   ))}
                 </div>
-                <Link to="/shop" onClick={() => setShopOpen(false)} className="mt-3 bg-black text-white rounded-full py-3 text-sm font-bold text-center block">View All Products →</Link>
+                <button onClick={handleShopClick} className="mt-3 w-full bg-black text-white rounded-full py-3 text-sm font-bold text-center block">View All Products →</button>
               </div>
             )}
           </div>
@@ -74,14 +112,14 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* MOBILE MEGA MENU - FIXED SHOP REDIRECT */}
+      {/* MOBILE MEGA MENU - SCROLL VERSION */}
       {mobileOpen && (
         <div className="lg:hidden bg-[#0f0f0f] border-t border-white/10 px-4 py-5 max-h-[80vh] overflow-y-auto">
           <Link to="/" onClick={() => setMobileOpen(false)} className="block py-3 text-white font-medium">Home</Link>
           
           <div className="py-2">
             <div className="flex items-center justify-between">
-              <Link to="/shop" onClick={() => setMobileOpen(false)} className="py-3 text-white font-medium flex-1">Shop</Link>
+              <button onClick={handleShopClick} className="py-3 text-white font-medium flex-1 text-left">Shop</button>
               <button onClick={() => setMobileShopOpen(!mobileShopOpen)} className="p-2 text-white grid place-items-center">
                 <ChevronDown size={16} className={`${mobileShopOpen ? "rotate-180" : ""} transition`} />
               </button>
@@ -91,13 +129,13 @@ export default function Navbar() {
               <div className="mt-2 bg-white rounded-[20px] p-3">
                 <div className="grid grid-cols-1 gap-1">
                   {shopCategories.map((c) => (
-                    <Link key={c.name} to={c.link} onClick={() => setMobileOpen(false)} className="flex gap-3 p-3 rounded-xl hover:bg-zinc-100 text-black">
+                    <button key={c.name} onClick={() => handleCategoryClick(c.cat)} className="flex gap-3 p-3 rounded-xl hover:bg-zinc-100 text-black w-full text-left">
                       <div className="w-8 h-8 rounded-lg bg-zinc-100 grid place-items-center text-xs">•</div>
                       <div><p className="font-bold text-sm">{c.name}</p><p className="text-xs text-zinc-500">{c.sub}</p></div>
-                    </Link>
+                    </button>
                   ))}
                 </div>
-                <Link to="/shop" onClick={() => setMobileOpen(false)} className="mt-3 bg-black text-white rounded-full py-3 text-sm font-bold text-center block">View All Products →</Link>
+                <button onClick={handleShopClick} className="mt-3 w-full bg-black text-white rounded-full py-3 text-sm font-bold text-center block">View All Products →</button>
               </div>
             )}
           </div>
