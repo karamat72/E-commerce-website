@@ -1,58 +1,77 @@
-import { CheckCircle2, Mail, MapPin, Phone } from "lucide-react";
 import { useState } from "react";
-import Button from "../components/Button";
-
-const initial = { name: "", email: "", topic: "Product question", message: "" };
+import { Mail, Phone, MapPin, Send, Sparkles, MessageCircle } from "lucide-react";
 
 export default function Contact() {
-  const [form, setForm] = useState(initial);
-  const [errors, setErrors] = useState({});
-  const [sent, setSent] = useState(false);
+  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+  const whatsappNumber = "923554576050"; // 03554576050 -> international
+  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent("Hello My Store! Mujhe aapke products ke baare me puchna hai.")}`;
 
-  const onChange = (event) => {
-    const { name, value } = event.target;
-    setForm((current) => ({ ...current, [name]: value }));
-    setErrors((current) => ({ ...current, [name]: "" }));
-    setSent(false);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // WhatsApp par message bhejo form data ke saath
+    const text = `Name: ${form.name}%0AEmail: ${form.email}%0ASubject: ${form.subject}%0AMessage: ${form.message}`;
+    window.open(`https://wa.me/${whatsappNumber}?text=${text}`, "_blank");
   };
 
-  const submit = (event) => {
-    event.preventDefault();
-    const next = {};
-    if (!form.name.trim()) next.name = "Please enter your name.";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) next.email = "Please enter a valid email.";
-    if (form.message.trim().length < 10) next.message = "Please write at least 10 characters.";
-    setErrors(next);
-    if (!Object.keys(next).length) {
-      setSent(true);
-      setForm(initial);
-    }
-  };
-
-  const fieldClass = "w-full rounded-xl border border-ink/15 bg-white px-4 py-3 text-sm outline-none transition placeholder:text-muted/60 focus:border-ink";
   return (
-    <div className="min-h-[60vh] bg-ivory">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-        <p className="mb-3 text-[10px] font-bold uppercase tracking-[.22em] text-bronze">We’re here to help</p>
-        <h1 className="text-4xl font-semibold tracking-[-.05em] text-ink sm:text-5xl">Let’s talk<span className="text-bronze">.</span></h1>
-        <p className="mt-3 max-w-xl text-sm leading-7 text-muted">Have a question about a product or this demo store? Send a note using the form below.</p>
-        <div className="mt-10 grid gap-8 md:grid-cols-[.75fr_1.25fr]">
-          <div className="space-y-4">
-            {[{icon:Mail,title:"Email",text:"hello@reactstore.example"},{icon:Phone,title:"Phone",text:"+92 300 0000000"},{icon:MapPin,title:"Based in",text:"Pakistan"}].map(({icon:Icon,title,text})=><div key={title} className="flex gap-4 rounded-2xl border border-ink/10 bg-white p-5"><span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-ivory"><Icon size={18}/></span><div><h2 className="text-sm font-semibold text-ink">{title}</h2><p className="mt-1 text-sm text-muted">{text}</p></div></div>)}
-            <p className="rounded-xl bg-[#e9e8df] p-4 text-xs leading-6 text-muted">Demo details: these contact details are placeholders. This form validates locally and does not send a real message.</p>
+    <div className="bg-[#0a0a0a] text-white min-h-screen">
+      {/* HEADER - Same as Home/About */}
+      <section className="bg-[#0f0f0f] border-b border-white/10">
+        <div className="mx-auto max-w-7xl px-6 lg:px-10 py-16 lg:py-20">
+          <p className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-[#151515] px-4 py-2 text-[10px] font-bold tracking-[0.2em] uppercase text-zinc-400"><Sparkles size={12}/> We're Here To Help</p>
+          <h1 className="mt-6 text-5xl md:text-6xl font-semibold tracking-tight">Let's talk.</h1>
+          <p className="mt-4 text-zinc-500 max-w-xl text-[15px]">Have a question about a product or this demo store? Send a note using the form below. We reply within 24 hours.</p>
+        </div>
+      </section>
+
+      <div className="mx-auto max-w-7xl px-6 lg:px-10 py-12 lg:py-16 grid lg:grid-cols-3 gap-10">
+        {/* LEFT CONTACT CARDS */}
+        <div className="space-y-4">
+          <div className="rounded-[20px] bg-[#0f0f0f] border border-white/10 p-6 flex gap-4">
+            <div className="w-10 h-10 rounded-full bg-[#151515] border border-white/10 grid place-items-center"><Mail size={18}/></div>
+            <div><p className="text-xs text-zinc-500 uppercase tracking-widest">Email</p><p className="font-semibold mt-1 text-sm">hello@mystore.example</p><p className="text-xs text-zinc-500 mt-1">Reply in 24h</p></div>
           </div>
-          <form onSubmit={submit} noValidate className="rounded-2xl border border-ink/10 bg-white p-5 sm:p-8">
-            {sent && <div role="status" className="mb-5 flex items-start gap-3 rounded-xl bg-[#e6eee6] p-4 text-sm text-ink"><CheckCircle2 size={18} className="mt-0.5 shrink-0"/><span><strong>Message checked successfully.</strong><br/>This is a demo confirmation only. No message was sent.</span></div>}
-            <div className="grid gap-5 sm:grid-cols-2">
-              <label className="block"><span className="mb-2 block text-xs font-semibold text-ink">Your name *</span><input name="name" value={form.name} onChange={onChange} className={`${fieldClass} ${errors.name ? "border-red-500" : ""}`} placeholder="Name"/>{errors.name && <span className="mt-1 block text-xs text-red-600">{errors.name}</span>}</label>
-              <label className="block"><span className="mb-2 block text-xs font-semibold text-ink">Email address *</span><input name="email" type="email" value={form.email} onChange={onChange} className={`${fieldClass} ${errors.email ? "border-red-500" : ""}`} placeholder="you@example.com"/>{errors.email && <span className="mt-1 block text-xs text-red-600">{errors.email}</span>}</label>
-              <label className="block sm:col-span-2"><span className="mb-2 block text-xs font-semibold text-ink">What’s this about?</span><select name="topic" value={form.topic} onChange={onChange} className={fieldClass}><option>Product question</option><option>Order support</option><option>Feedback</option><option>Something else</option></select></label>
-              <label className="block sm:col-span-2"><span className="mb-2 block text-xs font-semibold text-ink">Message *</span><textarea name="message" value={form.message} onChange={onChange} rows="5" className={`${fieldClass} resize-y ${errors.message ? "border-red-500" : ""}`} placeholder="How can we help?"/>{errors.message && <span className="mt-1 block text-xs text-red-600">{errors.message}</span>}</label>
+
+          <div className="rounded-[20px] bg-[#0f0f0f] border border-white/10 p-6 flex gap-4">
+            <div className="w-10 h-10 rounded-full bg-[#151515] border border-white/10 grid place-items-center"><Phone size={18}/></div>
+            <div><p className="text-xs text-zinc-500 uppercase tracking-widest">Phone</p><p className="font-semibold mt-1 text-sm">+92 355 457 6050</p><p className="text-xs text-zinc-500 mt-1">03554576050</p></div>
+          </div>
+
+          <div className="rounded-[20px] bg-[#0f0f0f] border border-white/10 p-6 flex gap-4">
+            <div className="w-10 h-10 rounded-full bg-[#151515] border border-white/10 grid place-items-center"><MapPin size={18}/></div>
+            <div><p className="text-xs text-zinc-500 uppercase tracking-widest">Based In</p><p className="font-semibold mt-1 text-sm">Pakistan</p><p className="text-xs text-zinc-500 mt-1">Deliver all over Pakistan</p></div>
+          </div>
+
+          {/* WHATSAPP CARD - Main */}
+          <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="rounded-[20px] bg-[#25D366] text-black p-6 flex gap-4 hover:bg-[#20bd5a] transition block">
+            <div className="w-10 h-10 rounded-full bg-black text-[#25D366] grid place-items-center"><MessageCircle size={20}/></div>
+            <div><p className="text-xs uppercase tracking-widest font-bold opacity-80">Chat on WhatsApp</p><p className="font-bold mt-1">0355 457 6050</p><p className="text-xs mt-1 font-medium">Click to open WhatsApp</p></div>
+          </a>
+        </div>
+
+        {/* RIGHT FORM */}
+        <div className="lg:col-span-2 rounded-[28px] bg-[#0f0f0f] border border-white/10 p-8">
+          <h3 className="text-xl font-semibold">Send us a message</h3>
+          <p className="text-zinc-500 text-sm mt-2">Form bharo — direct WhatsApp par chala jayega</p>
+
+          <form onSubmit={handleSubmit} className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div><label className="text-xs text-zinc-400 uppercase tracking-widest">Your name *</label><input required value={form.name} onChange={e=>setForm({...form, name:e.target.value})} placeholder="Saima" className="mt-2 w-full rounded-full bg-[#151515] border border-white/10 px-5 py-3.5 text-sm outline-none focus:border-white/30" /></div>
+            <div><label className="text-xs text-zinc-400 uppercase tracking-widest">Email address *</label><input required type="email" value={form.email} onChange={e=>setForm({...form, email:e.target.value})} placeholder="you@example.com" className="mt-2 w-full rounded-full bg-[#151515] border border-white/10 px-5 py-3.5 text-sm outline-none focus:border-white/30" /></div>
+            <div className="md:col-span-2"><label className="text-xs text-zinc-400 uppercase tracking-widest">What's this about?</label><select value={form.subject} onChange={e=>setForm({...form, subject:e.target.value})} className="mt-2 w-full rounded-full bg-[#151515] border border-white/10 px-5 py-3.5 text-sm outline-none focus:border-white/30"><option>Product question</option><option>Order status</option><option>Return / Exchange</option><option>Other</option></select></div>
+            <div className="md:col-span-2"><label className="text-xs text-zinc-400 uppercase tracking-widest">Message *</label><textarea required rows={5} value={form.message} onChange={e=>setForm({...form, message:e.target.value})} placeholder="How can we help?" className="mt-2 w-full rounded-[20px] bg-[#151515] border border-white/10 px-5 py-4 text-sm outline-none focus:border-white/30 resize-none" /></div>
+
+            <div className="md:col-span-2 flex flex-col sm:flex-row gap-3 pt-2">
+              <button type="submit" className="inline-flex items-center justify-center gap-2 rounded-full bg-white text-black px-8 py-3.5 text-sm font-bold hover:bg-zinc-200 transition"><Send size={16}/> Send via WhatsApp</button>
+              <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25D366] text-black px-8 py-3.5 text-sm font-bold hover:bg-[#20bd5a] transition"><MessageCircle size={16}/> Direct WhatsApp</a>
             </div>
-            <Button type="submit" className="mt-6 w-full sm:w-auto">Send demo message</Button>
           </form>
         </div>
       </div>
+
+      {/* FLOATING WHATSAPP BUTTON */}
+      <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25D366] text-white grid place-items-center shadow-[0_10px_40px_rgba(37,211,102,0.5)] hover:scale-110 transition">
+        <MessageCircle size={28} fill="white" />
+      </a>
     </div>
   );
 }
