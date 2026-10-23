@@ -5,7 +5,7 @@ import { ChevronDown, ShoppingBag, Menu, X } from "lucide-react";
 export default function Navbar() {
   const [shopOpen, setShopOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [mobileShopOpen, setMobileShopOpen] = useState(true); // Mobile pe Shop ka sub-menu khula rahega
+  const [mobileShopOpen, setMobileShopOpen] = useState(true);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -31,13 +31,17 @@ export default function Navbar() {
           MY STORE
         </Link>
 
-        {/* DESKTOP MENU */}
+        {/* DESKTOP MENU - FIXED SHOP REDIRECT */}
         <nav className="hidden lg:flex items-center gap-8 text-[14px]">
           <Link to="/" className="text-white">Home</Link>
-          <div ref={ref} className="relative">
-            <button onClick={(e) => { e.stopPropagation(); setShopOpen(!shopOpen); }} className="flex items-center gap-1 text-zinc-400 hover:text-white">
-              Shop <ChevronDown size={14} className={shopOpen ? "rotate-180" : ""} />
+          
+          {/* YAHAN FIX KIYA HAI - Shop Link + Arrow Button Alag */}
+          <div ref={ref} className="relative flex items-center gap-1">
+            <Link to="/shop" className="text-zinc-400 hover:text-white">Shop</Link>
+            <button onClick={(e) => { e.stopPropagation(); setShopOpen(!shopOpen); }} className="p-1 text-zinc-400 hover:text-white grid place-items-center">
+              <ChevronDown size={14} className={`${shopOpen ? "rotate-180" : ""} transition`} />
             </button>
+            
             {shopOpen && (
               <div className="absolute left-1/2 -translate-x-1/2 top-[50px] w-[420px] bg-white rounded-[20px] p-3 shadow-2xl z-50">
                 <div className="grid grid-cols-2 gap-2">
@@ -51,6 +55,7 @@ export default function Navbar() {
               </div>
             )}
           </div>
+          
           <Link to="/about" className="text-zinc-400 hover:text-white">About</Link>
           <Link to="/contact" className="text-zinc-400 hover:text-white">Contact</Link>
         </nav>
@@ -69,16 +74,18 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* MOBILE MEGA MENU - AB YAHAN SHOP KA SUBMENU DIKHEGA */}
+      {/* MOBILE MEGA MENU - FIXED SHOP REDIRECT */}
       {mobileOpen && (
         <div className="lg:hidden bg-[#0f0f0f] border-t border-white/10 px-4 py-5 max-h-[80vh] overflow-y-auto">
           <Link to="/" onClick={() => setMobileOpen(false)} className="block py-3 text-white font-medium">Home</Link>
           
-          {/* SHOP WITH SUBMENU ON MOBILE */}
           <div className="py-2">
-            <button onClick={() => setMobileShopOpen(!mobileShopOpen)} className="w-full flex items-center justify-between py-3 text-white font-medium">
-              <span>Shop</span><ChevronDown size={16} className={`${mobileShopOpen ? "rotate-180" : ""} transition`} />
-            </button>
+            <div className="flex items-center justify-between">
+              <Link to="/shop" onClick={() => setMobileOpen(false)} className="py-3 text-white font-medium flex-1">Shop</Link>
+              <button onClick={() => setMobileShopOpen(!mobileShopOpen)} className="p-2 text-white grid place-items-center">
+                <ChevronDown size={16} className={`${mobileShopOpen ? "rotate-180" : ""} transition`} />
+              </button>
+            </div>
             
             {mobileShopOpen && (
               <div className="mt-2 bg-white rounded-[20px] p-3">
